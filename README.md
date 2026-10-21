@@ -1,80 +1,80 @@
-# Práctica: Configuración y Conectividad de Motores de Bases de Datos en Red
+# Práctica: Configuración y conectividad de motores de bases de datos en red
 
 **Servidor (IP):** 192.168.0.26
 **Cliente:** Linux Mint (Máquina Virtual)
 
 ---
 
-## Estado del Servidor
-Antes de comenzar con los clientes, he comprobado que los tres motores de bases de datos se encuentran en ejecución en el servidor (PostgreSQL y MariaDB como servicios de `systemd`, y Oracle Database en un contenedor gestionado con `podman`)[cite: 20].
-![Estado de los servicios en el servidor](01.png)
+## Estado del servidor
+Antes de meterme con los clientes, he comprobado que los tres motores de bases de datos están corriendo sin problemas en el servidor (PostgreSQL y MariaDB como servicios de `systemd`, y Oracle metido en un contenedor de `podman`).
+![Estado de los servicios en el servidor](images/01.png)
 
 ---
 
 ## 1. PostgreSQL
 
-### 1.1. Conexión mediante Cliente de Consola
-Tras habilitar la escucha remota en el servidor, he instalado el paquete `postgresql-client` en mi máquina cliente para poder acceder por terminal[cite: 15].
-![Instalación de postgresql-client](13.png)
+### 1.1. Conexión por terminal
+Después de configurar el servidor para que acepte conexiones remotas, he instalado el paquete `postgresql-client` en mi cliente de Linux Mint para poder entrar por terminal.
+![Instalación de postgresql-client](images/13.png)
 
-Me he conectado remotamente con el comando `psql -h 192.168.0.26 -U pguser -d dbpg -W`.
+Me he conectado en remoto usando el comando `psql -h 192.168.0.26 -U pguser -d dbpg -W`.
 
-### 1.2. Conexión mediante Cliente Gráfico (pgAdmin 4)
-He instalado la versión Desktop de pgAdmin 4. He registrado el servidor remoto apuntando a la base de datos `dbpg` y he establecido la conexión con éxito, visualizando el panel de rendimiento[cite: 16].
-![Panel de pgAdmin 4 conectado](14.png)
+### 1.2. Conexión gráfica (pgAdmin 4)
+Me he descargado e instalado la versión de escritorio de pgAdmin 4. Luego he añadido el servidor remoto apuntando a la base de datos `dbpg` y ha conectado a la primera, mostrando el panel de rendimiento.
+![Panel de pgAdmin 4 conectado](images/14.png)
 
 ---
 
 ## 2. MariaDB
 
-### 2.1. Conexión mediante Cliente de Consola (mariadb-client)
-Tras ajustar los permisos de red en el servidor, he realizado la conexión por terminal desde mi cliente utilizando el comando `mariadb -h 192.168.0.26 -u muser -p dbm`, logrando acceder al monitor de la base de datos[cite: 17].
-![Conexión exitosa a MariaDB por consola](15.png)
+### 2.1. Conexión por terminal (mariadb-client)
+Una vez ajustados los permisos de red en el servidor, me he conectado por consola desde el cliente con el comando `mariadb -h 192.168.0.26 -u muser -p dbm`. Ha entrado perfecto al monitor de MariaDB.
+![Conexión exitosa a MariaDB por consola](images/15.png)
 
-### 2.2. Conexión mediante Cliente Web (phpMyAdmin)
-He instalado Apache y phpMyAdmin, configurando el archivo `config.inc.php` para apuntar el host hacia la IP de mi servidor remoto. La interfaz web muestra correctamente la conexión al servidor y a la base de datos `dbm`[cite: 18].
-![phpMyAdmin mostrando la base de datos dbm](16.png)
+### 2.2. Conexión web (phpMyAdmin)
+He montado Apache y phpMyAdmin en el cliente. Para que no busque en local, he tocado el archivo `config.inc.php` para meter la IP del servidor remoto. Al entrar desde el navegador, conecta bien y me carga la base de datos `dbm`.
+![phpMyAdmin mostrando la base de datos dbm](images/16.png)
 
 ---
 
 ## 3. Oracle Database
 
-### 3.1. Conexión mediante Oracle SQL Developer
-Primero, he preparado el entorno instalando Java (JDK) y `unzip`[cite: 21], herramientas necesarias para ejecutar la aplicación. 
-![Instalación de dependencias](02.png)
+### 3.1. Conexión con Oracle SQL Developer
+Primero he tenido que preparar un poco el terreno instalando Java (JDK) y `unzip` porque hacían falta. 
+![Instalación de dependencias](images/02.png)
 
-A continuación, he descargado el archivo `.zip` oficial sin JRE[cite: 22] y lo he descomprimido en el directorio `/opt/`[cite: 23].
-![Descarga de SQL Developer](03.png)
-![Descompresión del archivo](04.png)
+Después me he descargado el `.zip` oficial de Oracle (la versión sin JRE) y lo he descomprimido en `/opt/`.
+![Descarga de SQL Developer](images/03.png)
+![Descompresión del archivo](images/04.png)
 
-He iniciado la aplicación ejecutando su script[cite: 24] y he accedido a la pantalla de bienvenida[cite: 25].
-![Pantalla de carga de SQL Developer](05.png)
-![Pantalla de bienvenida de SQL Developer](06.png)
+Para arrancarlo, he ejecutado su script y ya me ha salido la pantalla de carga y la de bienvenida.
+![Pantalla de carga de SQL Developer](images/05.png)
+![Pantalla de bienvenida de SQL Developer](images/06.png)
 
-Para integrarlo en el sistema, he creado un acceso directo (`.desktop`)[cite: 9]. Finalmente, he configurado una nueva conexión hacia el servicio remoto utilizando el usuario `orauser` y el nombre de servicio `FREEPDB1`[cite: 10].
-![Creación del acceso directo de SQL Developer](07.png)
-![Configuración de conexión en SQL Developer](08.png)
+He creado un acceso directo (`.desktop`) para tenerlo integrado en el menú de aplicaciones. Por último, he creado la conexión usando el usuario `orauser` y el servicio `FREEPDB1`.
+![Creación del acceso directo de SQL Developer](images/07.png)
+![Configuración de conexión en SQL Developer](images/08.png)
 
-### 3.2. Conexión mediante Visual Studio Code
-También he configurado VS Code como cliente alternativo para Oracle. He descargado el instalador `.deb` oficial para Linux[cite: 11] y he aceptado añadir los repositorios de Microsoft en el gestor de paquetes durante la instalación[cite: 12].
-![Descarga de VS Code](09.png)
-![Configuración de repositorios de VS Code](10.png)
+### 3.2. Conexión con Visual Studio Code
+Para probar otra opción, también he configurado Visual Studio Code. Me he descargado el `.deb` de su web y al instalarlo le he dicho que me añada los repos de Microsoft.
+![Descarga de VS Code](images/09.png)
+![Configuración de repositorios de VS Code](images/10.png)
 
-Una vez instalado, he buscado y añadido la extensión oficial "Oracle SQL Developer for VS Code" desde el Marketplace[cite: 13].
-![Instalación de la extensión de Oracle en VS Code](11.png)
+Luego he buscado la extensión oficial "Oracle SQL Developer for VS Code" en el Marketplace y la he instalado.
+![Instalación de la extensión de Oracle en VS Code](images/11.png)
 
-Utilizando la interfaz de esta extensión, he creado la conexión al servicio `FREEPDB1` del servidor remoto en la IP `192.168.0.26`[cite: 14].
-![Conexión a Oracle configurada en VS Code](12.png)
+Desde la propia extensión, he montado la conexión al servicio `FREEPDB1` de la IP `192.168.0.26`.
+![Conexión a Oracle configurada en VS Code](images/12.png)
 
 ---
 
 ## 4. Clientes Multi-SGBD: DBeaver Community
 
-He instalado el paquete `.deb` de DBeaver Community en la máquina cliente. A través de este cliente gráfico universal, he configurado y descargado los controladores JDBC correspondientes para conectarme de forma simultánea a los tres motores de bases de datos alojados en el servidor:
+Para terminar, he instalado el `.deb` de DBeaver Community en el cliente. Con este programa he podido juntarlo todo: he configurado las tres conexiones (bajando los drivers JDBC que me iba pidiendo) para conectarme a la vez a:
 
-1. **PostgreSQL:** Conexión a `dbpg` con usuario `pguser`.
-2. **MariaDB:** Conexión a `dbm` con usuario `muser`.
+1. **PostgreSQL:** Conexión a `dbpg` con el usuario `pguser`.
+2. **MariaDB:** Conexión a `dbm` con el usuario `muser`.
 3. **Oracle Database:** Conexión al servicio `FREEPDB1` por el puerto `1521` con el usuario `orauser`.
 
-En la siguiente imagen se comprueba el éxito de la operación al tener las tres conexiones activas y desplegadas en el mismo entorno[cite: 19].
-![Ventana principal de DBeaver con PostgreSQL, MariaDB y Oracle](17.png)
+En la última captura se puede ver que están las tres bases de datos conectadas y listas en el mismo panel de la izquierda.
+![Ventana principal de DBeaver con PostgreSQL, MariaDB y Oracle](images/17.png)
