@@ -6,7 +6,7 @@
 ---
 
 ## Estado del servidor
-Antes de meterme con los clientes, he comprobado que los tres motores de bases de datos están corriendo sin problemas en el servidor (PostgreSQL y MariaDB como servicios de `systemd`, y Oracle metido en un contenedor de `podman`).
+Antes de hacer nada con los clientes, he comprobado que los tres motores de bases de datos están activos en el servidor (PostgreSQL y MariaDB como servicios de `systemd`, y Oracle metido en un contenedor de `podman`).
 ![Estado de los servicios en el servidor](images/01.png)
 
 ---
@@ -40,7 +40,7 @@ He montado Apache y phpMyAdmin en el cliente. Para que no busque en local, he to
 ## 3. Oracle Database
 
 ### 3.1. Conexión con Oracle SQL Developer
-Primero he tenido que preparar un poco el terreno instalando Java (JDK) y `unzip` porque hacían falta. 
+Primero he tenido que instalar Java (JDK) y `unzip` porque hacían falta. 
 ![Instalación de dependencias](images/02.png)
 
 Después me he descargado el `.zip` oficial de Oracle (la versión sin JRE) y lo he descomprimido en `/opt/`.
@@ -56,11 +56,11 @@ He creado un acceso directo (`.desktop`) para tenerlo integrado en el menú de a
 ![Configuración de conexión en SQL Developer](images/08.png)
 
 ### 3.2. Conexión con Visual Studio Code
-Para probar otra opción, también he configurado Visual Studio Code. Me he descargado el `.deb` de su web y al instalarlo le he dicho que me añada los repos de Microsoft.
+Para probar otra opción, también he configurado Visual Studio Code.
 ![Descarga de VS Code](images/09.png)
 ![Configuración de repositorios de VS Code](images/10.png)
 
-Luego he buscado la extensión oficial "Oracle SQL Developer for VS Code" en el Marketplace y la he instalado.
+Luego he buscado la extensión oficial "Oracle SQL Developer for VS Code" y la he instalado.
 ![Instalación de la extensión de Oracle en VS Code](images/11.png)
 
 Desde la propia extensión, he montado la conexión al servicio `FREEPDB1` de la IP `192.168.0.26`.
@@ -70,11 +70,11 @@ Desde la propia extensión, he montado la conexión al servicio `FREEPDB1` de la
 
 ## 4. Clientes Multi-SGBD: DBeaver Community
 
-Para terminar, he instalado el `.deb` de DBeaver Community en el cliente. Con este programa he podido juntarlo todo: he configurado las tres conexiones (bajando los drivers JDBC que me iba pidiendo) para conectarme a la vez a:
+Para terminar, he instalado el `.deb` de DBeaver Community en el cliente. Con este programa he podido juntarlo todo: he configurado las tres conexiones para conectarme a la vez a:
 
 1. **PostgreSQL:** Conexión a `dbpg` con el usuario `pguser`.
 2. **MariaDB:** Conexión a `dbm` con el usuario `muser`.
 3. **Oracle Database:** Conexión al servicio `FREEPDB1` por el puerto `1521` con el usuario `orauser`.
 
-En la última captura se puede ver que están las tres bases de datos conectadas y listas en el mismo panel de la izquierda.
+En esta última captura se puede ver que están las tres bases de datos conectadas y listas en el mismo panel de la izquierda.
 ![Ventana principal de DBeaver con PostgreSQL, MariaDB y Oracle](images/17.png)
